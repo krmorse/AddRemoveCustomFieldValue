@@ -1,0 +1,12 @@
+{
+    "name": "AddRemoveCustomFieldValue",
+    "className": "CustomApp",
+    "server": "http://fozzie.f4tech.com:7001",
+    "sdk": "2.1",
+    "javascript": [
+        "App.js"
+    ],
+    "css": [
+        "app.css"
+    ]
+}
