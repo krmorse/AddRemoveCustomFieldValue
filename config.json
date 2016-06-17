@@ -1,7 +1,7 @@
 {
     "name": "AddRemoveCustomFieldValue",
     "className": "CustomApp",
-    "server": "http://fozzie.f4tech.com:7001",
+    "server": "https://rally1.rallydev.com",
     "sdk": "2.1",
     "javascript": [
         "App.js"

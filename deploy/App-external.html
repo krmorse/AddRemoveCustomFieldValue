@@ -3,11 +3,11 @@
 <head>
     <title>AddRemoveCustomFieldValue</title>
 
-    <script type="text/javascript" src="http://fozzie.f4tech.com:7001/apps/2.1/sdk.js"></script>
+    <script type="text/javascript" src="https://rally1.rallydev.com/apps/2.1/sdk.js"></script>
 
     <script type="text/javascript">
         Rally.onReady(function () {
-                Ext.define("CustomApp",{extend:"Rally.app.App",componentCls:"app",launch:function(){Rally.data.wsapi.ModelFactory.getModels({types:["userstory","allowedattributevalue"]}).then({success:function(models){var field=models.userstory.getField("c_KanbanState"),newValue=Ext.create(models.allowedattributevalue,{StringValue:"D",ValueIndex:0,AttributeDefinition:Rally.util.Ref.getRelativeUri(field.attributeDefinition)});newValue.save().then({success:function(){console.log(arguments)},scope:this})},scope:this})}});
+                Ext.define("CustomApp",{extend:"Rally.app.App",componentCls:"app",launch:function(){Rally.data.wsapi.ModelFactory.getModels({types:["userstory","attributedefinition","allowedattributevalue"]}).then({success:this._createField,scope:this})},_createField:function(models){this.models=models,_.each(["AttributeType","RealAttributeType","Constrained","TypeDefinition"],function(fieldName){this.models.attributedefinition.getField(fieldName).persist=!0},this);var newField=Ext.create(this.models.attributedefinition,{AttributeType:"STRING",RealAttributeType:"DROP_DOWN",Constrained:!0,Custom:!0,Filterable:!0,Sortable:!0,Name:"MyDropdownField",TypeDefinition:this.models.userstory.typeDefinition._ref});newField.save().then({success:this._createValue,scope:this})},_createValue:function(field){var newValue=Ext.create(this.models.allowedattributevalue,{StringValue:"D",ValueIndex:0,AttributeDefinition:Rally.util.Ref.getRelativeUri(field)});newValue.save().then({success:function(){console.log("winning")},scope:this})}});
 
             Rally.launchApp('CustomApp', {
                 name:"AddRemoveCustomFieldValue",
